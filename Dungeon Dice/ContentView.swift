@@ -14,6 +14,7 @@ struct ContentView: View {
     case eight = 8
     case twelve = 12
     case twenty = 20
+    case hundred = 100
     
     func roll() -> Int { Int.random(in: 1...self.rawValue) }
   }
@@ -31,35 +32,47 @@ struct ContentView: View {
           .font(.largeTitle)
           .fontWeight(.black)
           .foregroundStyle(.red)
-          .padding(.top, 25)
-         
+          .padding(.top)
+        
         Spacer()
         
         Text(message)
           .fontDesign(.serif)
           .font(.title)
           .fontWeight(.bold)
-          .minimumScaleFactor(0.5)
-          .foregroundStyle(.red)
-          
+          .multilineTextAlignment(.center)
+          .foregroundStyle(.black)
+          .animation(.easeInOut, value: message)
+        
+        Spacer()
         Spacer()
         
-        LazyVGrid(columns: columns) {
+        LazyVGrid(columns: columns, spacing: 20) {
           ForEach(Dice.allCases, id: \.self) { side in
             Button {
               message = "You rolled a \(side.roll()) on a \(side.rawValue)-sided dice."
+              //TODO: Add a dice image rotating animated when the button is tapped
+              //TODO: Play a sound, when the button is tapped
             } label: {
               Text("\(side.rawValue)-sided")
+                .fontDesign(.serif)
+                .font(.title3)
+                .fontWeight(.medium)
+                .foregroundStyle(.black)
             }
             .buttonStyle(.borderedProminent)
-
+            .tint(.red)
+            .shadow(radius: 5)
+            
           }
         }
+        .padding(.bottom)
       }
+      .padding(.horizontal)
     }
   }
 }
 
 #Preview {
-    ContentView()
+  ContentView()
 }
