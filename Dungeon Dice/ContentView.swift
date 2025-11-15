@@ -20,7 +20,7 @@ struct ContentView: View {
   }
   
   @State private var message = ""
-  private let columns = [GridItem(.adaptive(minimum: 90))]
+  private let columns = [GridItem(.adaptive(minimum: 112))]
   
   var body: some View {
     ZStack {
@@ -59,6 +59,7 @@ struct ContentView: View {
                 .font(.title3)
                 .fontWeight(.medium)
                 .foregroundStyle(.black)
+                .frame(width: 92)
             }
             .buttonStyle(.borderedProminent)
             .tint(.red)
