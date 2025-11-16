@@ -30,23 +30,9 @@ struct ContentView: View {
       Color.black.opacity(0.75).ignoresSafeArea()
       
       VStack {
-        Text("Dungeon Dice")
-          .fontDesign(.serif)
-          .font(.largeTitle)
-          .fontWeight(.black)
-          .foregroundStyle(.red)
-          .padding(.top)
-        
+        titleView
         Spacer()
-        
-        Text(message)
-          .fontDesign(.serif)
-          .font(.title)
-          .fontWeight(.bold)
-          .multilineTextAlignment(.center)
-          .foregroundStyle(.black)
-          .animation(.easeInOut, value: message)
-        
+        resultMessageView
         Spacer()
         Spacer()
         
@@ -71,9 +57,31 @@ struct ContentView: View {
           }
         }
         .padding(.bottom)
+        
       }
       .padding(.horizontal)
     }
+  }
+}
+
+extension ContentView {
+  var titleView: some View {
+    Text("Dungeon Dice")
+      .fontDesign(.serif)
+      .font(.largeTitle)
+      .fontWeight(.black)
+      .foregroundStyle(.red)
+      .padding(.top)
+  }
+  
+  var resultMessageView: some View {
+    Text(message)
+      .fontDesign(.serif)
+      .font(.title)
+      .fontWeight(.bold)
+      .multilineTextAlignment(.center)
+      .foregroundStyle(.black)
+      .animation(.easeInOut, value: message)
   }
 }
 
