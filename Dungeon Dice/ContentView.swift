@@ -23,24 +23,44 @@ struct ContentView: View {
   }
   
   @State private var message = ""
+  @State private var stillStateOffset = 0.0
+  @State private var animated = false
+  @State private var animationDone = true
+  
   private let columns = [GridItem(.adaptive(minimum: 112))]
   
   var body: some View {
     ZStack {
-      Color.black.opacity(0.75).ignoresSafeArea()
+      Color.black.opacity(0.65).ignoresSafeArea()
       
       VStack {
         titleView
         Spacer()
         resultMessageView
         Spacer()
+        
+        Image(systemName: "dice")
+          .resizable()
+          .scaledToFit()
+          .frame(height: 100)
+          .offset(x: animationDone ? stillStateOffset : -120, y: 0)
+          .rotation3DEffect(animationDone ? .degrees(360) : .degrees(0), axis: (x: 0 , y: 0, z: 1))
+          .onChange(of: animated) {
+            animationDone = false
+            withAnimation(.easeInOut(duration: 0.7)) {
+              animationDone = true
+            }
+          }
+        
+        
         Spacer()
         
         LazyVGrid(columns: columns, spacing: 20) {
           ForEach(Dice.allCases) { side in
             Button {
+              stillStateOffset = 120
+              animated.toggle()
               message = "You rolled a \(side.roll()) on a \(side.rawValue)-sided dice."
-              //TODO: Add a dice image rotating animated when the button is tapped
               //TODO: Play a sound, when the button is tapped
             } label: {
               Text(side.description)
@@ -70,7 +90,7 @@ extension ContentView {
       .fontDesign(.serif)
       .font(.largeTitle)
       .fontWeight(.black)
-      .foregroundStyle(.red)
+      .foregroundStyle(.black)
       .padding(.top)
   }
   
@@ -81,6 +101,8 @@ extension ContentView {
       .fontWeight(.bold)
       .multilineTextAlignment(.center)
       .foregroundStyle(.black)
+      .frame(height: 105)
+      .frame(maxWidth: .infinity)
       .animation(.easeInOut, value: message)
   }
 }
