@@ -8,13 +8,16 @@
 import SwiftUI
 
 struct ContentView: View {
-  enum Dice: Int, CaseIterable {
+  enum Dice: Int, CaseIterable, Identifiable {
     case four = 4
     case six = 6
     case eight = 8
     case twelve = 12
     case twenty = 20
     case hundred = 100
+    
+    var id: Int { self.rawValue }
+    var description: String { "\(self.rawValue)-sided" }
     
     func roll() -> Int { Int.random(in: 1...self.rawValue) }
   }
@@ -48,13 +51,13 @@ struct ContentView: View {
         Spacer()
         
         LazyVGrid(columns: columns, spacing: 20) {
-          ForEach(Dice.allCases, id: \.self) { side in
+          ForEach(Dice.allCases) { side in
             Button {
               message = "You rolled a \(side.roll()) on a \(side.rawValue)-sided dice."
               //TODO: Add a dice image rotating animated when the button is tapped
               //TODO: Play a sound, when the button is tapped
             } label: {
-              Text("\(side.rawValue)-sided")
+              Text(side.description)
                 .fontDesign(.serif)
                 .font(.title3)
                 .fontWeight(.medium)
