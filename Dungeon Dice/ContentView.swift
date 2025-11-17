@@ -44,7 +44,7 @@ struct ContentView: View {
           .scaledToFit()
           .frame(height: 100)
           .offset(x: animationDone ? stillStateOffset : -120, y: 0)
-          .rotation3DEffect(animationDone ? .degrees(360) : .degrees(0), axis: (x: 0 , y: 0, z: 1))
+          .rotation3DEffect(animationDone ? .degrees(360) : .degrees(0), axis: (x: 0 , y: 0, z: 1), anchor: .bottomTrailing)
           .onChange(of: animated) {
             animationDone = false
             withAnimation(.easeInOut(duration: 0.7)) {
